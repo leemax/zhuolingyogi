@@ -6,7 +6,7 @@
   <title>卓玲｜身心整合疗愈师</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"> {/* 增加了900字重 */}
   <style>
     /* --- 1. 基础设定与色彩变量 --- */
     :root {
@@ -23,29 +23,19 @@
     }
 
     /* --- 2. CSS Reset 与全局样式 --- */
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
       color: var(--text-dark);
-      background-color: #FFFBF8; /* 备用背景色 */
-      overflow-x: hidden; /* 防止横向滚动 */
+      background-color: #FFFBF8;
+      overflow-x: hidden;
     }
 
-    /* --- 3. 动态极光背景 --- */
+    /* --- 3. 动态极光背景 (无修改) --- */
     body::before {
       content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0; width: 100%; height: 100%;
       z-index: -1;
       pointer-events: none;
       background: radial-gradient(circle at 10% 20%, hsla(28, 80%, 95%, 0.7), transparent 40%),
@@ -53,95 +43,58 @@
                   radial-gradient(circle at 50% 50%, hsla(19, 90%, 90%, 0.6), transparent 40%);
       animation: aurora-flow 25s linear infinite;
     }
-
     @keyframes aurora-flow {
       0% { transform: rotate(0deg) scale(1.2); }
       50% { transform: rotate(180deg) scale(1.5); }
       100% { transform: rotate(360deg) scale(1.2); }
     }
 
-    /* --- 4. 滚动触发的淡入动画 --- */
+    /* --- 4. 滚动触发的淡入动画 (无修改) --- */
     .reveal {
       opacity: 0;
       transform: translateY(30px);
       transition: opacity 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
                   transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    /* --- 5. 页面布局容器 (无修改) --- */
+    .page-wrapper { width: 100%; display: flex; flex-direction: column; align-items: center; }
 
-    /* --- 5. 页面布局容器 --- */
-    .page-wrapper {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    /* --- 6. 头部区域设计 --- */
+    /* --- 6. 头部区域设计 (无修改) --- */
     .header {
-      width: 100%;
-      min-height: 70vh;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--text-dark);
+      width: 100%; min-height: 70vh; display: grid; place-items: center;
+      text-align: center; padding: 40px 20px; color: var(--text-dark);
     }
-    
     .header h1 {
-      font-size: var(--font-size-h1);
-      font-weight: 700;
-      line-height: 1.1;
-      color: var(--brand-orange);
-      margin-bottom: 0.5em;
+      font-size: var(--font-size-h1); font-weight: 700; line-height: 1.1;
+      color: var(--brand-orange); margin-bottom: 0.5em;
     }
-
     .header h2 {
-      font-size: var(--font-size-h2);
-      font-weight: 400;
-      color: var(--text-subtle);
-      max-width: 600px;
+      font-size: var(--font-size-h2); font-weight: 400;
+      color: var(--text-subtle); max-width: 600px;
     }
 
-    /* --- 7. 照片与视差效果 --- */
+    /* --- 7. 照片与视差效果 (无修改) --- */
     .photo-container {
-      width: clamp(300px, 90vw, 650px);
-      aspect-ratio: 4 / 3;
-      border-radius: 20px;
-      overflow: hidden;
+      width: clamp(300px, 90vw, 650px); aspect-ratio: 4 / 3;
+      border-radius: 20px; overflow: hidden;
       box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-      margin-top: -10vh; /* 与头部内容重叠 */
-      z-index: 10;
+      margin-top: -10vh; z-index: 10;
     }
+    .photo-container img { width: 100%; height: 100%; object-fit: cover; }
 
-    .photo-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      /* 移除这里的 transition，交由 JS 控制 transform */
-    }
-
-    /* --- 8. 内容区域与玻璃拟态卡片 --- */
+    /* --- 8. 内容区域与卡片 (★★★ 核心修改区域 ★★★) --- */
     .content-grid {
       display: grid;
-      grid-template-columns: 1fr;
+      /* 始终保持单列布局，让内容有足够的宽度来展示冲击力 */
+      grid-template-columns: 1fr; 
       gap: 40px;
       width: 100%;
       max-width: 900px;
       padding: 100px 20px 60px;
     }
-
-    @media (min-width: 768px) {
-      .content-grid {
-        /* 非对称布局 */
-        grid-template-columns: 1fr 1.2fr;
-      }
-    }
-
+    
     .content-card {
       background: rgba(255, 255, 255, 0.6);
       backdrop-filter: blur(15px) saturate(180%);
@@ -149,62 +102,88 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 16px;
       padding: 30px;
-      color: var(--text-subtle);
-      font-size: var(--font-size-body);
-      line-height: 1.8;
+      /* 使用flex布局来控制内部元素的间距 */
+      display: flex;
+      flex-direction: column;
+      gap: 1.5em; /* 设置元素之间的垂直间距 */
     }
 
-    .content-card strong {
-      display: block;
+    .card-title {
       font-size: var(--font-size-lead);
       color: var(--brand-orange);
-      margin-bottom: 1em;
       font-weight: 500;
-    }
-    
-    .content-card p {
-      margin-bottom: 0.8em;
-    }
-    
-    .content-card p:last-child {
-      margin-bottom: 0;
+      padding-bottom: 0.5em;
+      border-bottom: 1px solid rgba(211, 84, 0, 0.2);
     }
 
-    /* --- 9. CTA 按钮设计 --- */
-    .cta-container {
-      padding: 20px;
+    /* ★ 卡片1: 专项方案样式 */
+    .service-item {
+      font-size: clamp(1.5rem, 4vw, 2.25rem); /* 显著增大字号 */
+      font-weight: 700; /* 加粗 */
+      color: var(--text-dark);
+      line-height: 1.3;
       text-align: center;
-      width: 100%;
+    }
+    .service-item .icon {
+      font-size: 0.8em;
+      margin-left: 0.2em;
+      vertical-align: middle;
+      opacity: 0.8;
     }
 
-    .cta-button {
-      display: inline-block;
-      background-color: var(--brand-orange);
-      color: var(--white);
-      text-decoration: none;
-      padding: 16px 32px;
-      border-radius: 50px; /* 胶囊形状 */
-      font-size: var(--font-size-body);
+    /* ★ 卡片2: 核心优势样式 */
+    .advantage-item {
+      text-align: center;
+    }
+    .advantage-item .keyword {
+      font-size: clamp(3rem, 8vw, 5.5rem); /* 极具冲击力的大字号 */
+      font-weight: 900; /* 使用最粗的字重 */
+      color: var(--brand-orange);
+      line-height: 1.1;
+      display: block;
+    }
+    .advantage-item .keyword .unit {
+      font-size: 0.4em; /* 单位字号相对缩小 */
+      font-weight: 500;
+      color: var(--text-subtle);
+    }
+    .advantage-item .sub-keyword {
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
       font-weight: 700;
-      box-shadow: 0 4px 15px rgba(211, 84, 0, 0.3);
+      color: var(--text-dark);
+      margin-top: 0.2em;
+      display: block;
+    }
+    .advantage-item .description {
+      font-size: var(--font-size-body);
+      color: var(--text-subtle);
+      line-height: 1.8;
+      margin-top: 0.8em;
+      max-width: 500px; /* 限制描述文字宽度，居中更美观 */
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* --- 9. CTA 按钮设计 (无修改) --- */
+    .cta-container { padding: 20px; text-align: center; width: 100%; }
+    .cta-button {
+      display: inline-block; background-color: var(--brand-orange);
+      color: var(--white); text-decoration: none; padding: 16px 32px;
+      border-radius: 50px; font-size: var(--font-size-body);
+      font-weight: 700; box-shadow: 0 4px 15px rgba(211, 84, 0, 0.3);
       transition: all 0.3s ease;
     }
-
     .cta-button:hover, .cta-button:focus {
       transform: translateY(-4px) scale(1.05);
       box-shadow: 0 8px 25px rgba(211, 84, 0, 0.4);
       background-color: #E67E22;
     }
     
-    /* --- 10. 页脚 --- */
+    /* --- 10. 页脚 (无修改) --- */
     .footer {
-      padding: 40px 20px;
-      text-align: center;
-      font-size: 0.9em;
-      color: var(--text-subtle);
-      opacity: 0.7;
+      padding: 40px 20px; text-align: center; font-size: 0.9em;
+      color: var(--text-subtle); opacity: 0.7;
     }
-
   </style>
 </head>
 <body>
@@ -224,17 +203,24 @@
 
     <main class="content-grid">
       <div class="content-card reveal">
-        <p><strong>专项定制方案：</strong></p>
-        <p>🌿 神经调节情绪平衡</p>
-        <p>🌙 深睡管理气血调养</p>
-        <p>🩺 术后身心整合康养</p>
-        <p>⚖️ 体态失衡·脊背疼痛调理</p>
+        <h3 class="card-title">专项定制方案</h3>
+        <div class="service-item">神经调节情绪平衡<span class="icon">🌿</span></div>
+        <div class="service-item">深睡管理气血调养<span class="icon">🌙</span></div>
+        <div class="service-item">术后身心整合康养<span class="icon">🩺</span></div>
+        <div class="service-item">体态失衡·脊背疼痛<span class="icon">⚖️</span></div>
       </div>
+      
       <div class="content-card reveal">
-        <p><strong>核心优势：</strong></p>
-        <p>·精准定制方案：融合KHYF认证整体瑜伽理疗+意大利FM筋膜手法+整合身心平衡疗愈</p>
-        <p>·2005年执教至今：超万小时私教/团体/师资培训</p>
-        <p>·艺术疗愈力：身心整合践行者</p>
+        <h3 class="card-title">核心优势</h3>
+        <div class="advantage-item">
+          <span class="keyword">20<span class="unit">年+</span></span>
+          <span class="keyword">10000<span class="unit">小时+</span></span>
+          <p class="description">2005年执教至今，拥有超万小时私教、团体及师资培训经验。</p>
+        </div>
+        <div class="advantage-item">
+          <span class="sub-keyword">精准定制方案</span>
+          <p class="description">融合KHYF认证整体瑜伽理疗、意大利FM筋膜手法与整合身心平衡疗愈，提供高度个性化的解决方案。</p>
+        </div>
       </div>
     </main>
 
@@ -249,37 +235,28 @@
   </div>
 
   <script>
-    // --- JS 交互脚本 ---
-
+    // --- JS 交互脚本 (性能优化版) ---
     // 1. 滚动显示动画
     const revealElements = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          // 可选：一旦可见就停止观察，以提高性能
-          // revealObserver.unobserve(entry.target);
         }
       });
-    }, {
-      threshold: 0.1 // 元素进入视口10%时触发
-    });
+    }, { threshold: 0.1 });
     revealElements.forEach(el => revealObserver.observe(el));
 
-    // 2. 简易图片视差效果 (性能优化版)
+    // 2. 视差效果
     const parallaxImg = document.getElementById('parallax-img');
-    let ticking = false; // 节流阀
-
+    let ticking = false;
     function updateParallax() {
-      const scrollPosition = window.pageYOffset;
-      // 检查 parallaxImg 是否存在，以避免错误
       if (parallaxImg) {
-        // 减小系数可以使效果更微妙
+        const scrollPosition = window.pageYOffset;
         parallaxImg.style.transform = `translateY(${scrollPosition * 0.1}px)`;
       }
       ticking = false;
     }
-
     window.addEventListener('scroll', () => {
       if (!ticking) {
         window.requestAnimationFrame(updateParallax);
