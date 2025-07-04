@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>卓玲｜身心整合疗愈师</title>
   <style>
     :root {
@@ -22,32 +22,42 @@
     }
 
     .header {
-      background: url('photo1.jpg') center/cover no-repeat;
-      padding: 120px 20px 80px;
       text-align: center;
-      color: var(--white);
+      background-color: var(--monk-orange);
+      color: white;
+      padding: 60px 20px 40px;
     }
 
     .header h1 {
-      font-size: 3.2em;
+      font-size: 3em;
       margin: 0;
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
     }
 
     .header h2 {
-      font-size: 1.4em;
+      font-size: 1.5em;
       font-weight: normal;
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+      margin-top: 10px;
+    }
+
+    .photo {
+      text-align: center;
+      background-color: var(--white);
+      padding: 20px;
+    }
+
+    .photo img {
+      width: 100%;
+      height: auto;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
     }
 
     .container {
-      max-width: 800px;
+      max-width: 700px;
       margin: 0 auto;
-      background: var(--white);
-      padding: 40px 30px;
-      margin-top: -40px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      background-color: var(--white);
+      padding: 30px 20px;
     }
 
     .section {
@@ -62,30 +72,32 @@
 
     .cta {
       text-align: center;
-      margin: 40px 0 20px;
+      margin: 30px 0;
     }
 
     .cta a {
       background-color: var(--monk-orange);
       color: white;
       text-decoration: none;
-      padding: 14px 30px;
+      padding: 12px 24px;
       border-radius: 8px;
-      font-size: 1.1em;
+      font-size: 1em;
       font-weight: bold;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: background 0.3s ease;
-    }
-
-    .cta a:hover {
-      background-color: #c04d00;
+      display: inline-block;
     }
 
     .footer {
       text-align: center;
-      font-size: 0.95em;
+      font-size: 0.9em;
       color: #999;
       margin: 40px 0 20px;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 2em; }
+      .header h2 { font-size: 1.2em; }
+      .section { font-size: 1em; }
+      .cta a { font-size: 0.95em; padding: 10px 20px; }
     }
   </style>
 </head>
@@ -94,6 +106,10 @@
   <div class="header">
     <h1>卓玲</h1>
     <h2>身心整合疗愈师｜20年实践授课</h2>
+  </div>
+
+  <div class="photo">
+    <img src="photo1.jpg" alt="卓玲照片">
   </div>
 
   <div class="container">
