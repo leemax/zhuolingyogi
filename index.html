@@ -8,17 +8,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
-    /* --- 1-6. 基础/头部等样式 (无修改) --- */
+    /* --- 1. 基础设定与色彩变量 --- */
     :root {
       --brand-orange: #D35400; --text-dark: #2c2c2c; --text-subtle: #5f4d3f; --white: #ffffff;
       --font-size-h1: clamp(2.5rem, 6vw, 4.5rem); --font-size-h2: clamp(1.25rem, 3vw, 1.75rem);
       --font-size-body: clamp(1rem, 2vw, 1.125rem); --font-size-lead: clamp(1.1rem, 2.5vw, 1.25rem);
     }
+    /* --- 2. CSS Reset 与全局样式 --- */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
       color: var(--text-dark); background-color: #FFFBF8; overflow-x: hidden;
     }
+    /* --- 3. 动态极光背景 --- */
     body::before {
       content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       z-index: -1; pointer-events: none;
@@ -32,16 +34,25 @@
       50% { transform: rotate(180deg) scale(1.5); }
       100% { transform: rotate(360deg) scale(1.2); }
     }
+    /* --- 4. 滚动触发的淡入动画 --- */
     .reveal {
       opacity: 0; transform: translateY(30px);
       transition: opacity 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
                   transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
+    /* --- 5. 页面布局容器 --- */
     .page-wrapper { width: 100%; display: flex; flex-direction: column; align-items: center; }
+    
+    /* --- 6. 头部区域设计 --- */
     .header {
-      width: 100%; min-height: 70vh; display: grid; place-items: center;
-      text-align: center; padding: 40px 20px; color: var(--text-dark);
+      width: 100%; 
+      min-height: 60vh; /* 调整了高度，减少留白 */
+      display: grid; 
+      place-items: center;
+      text-align: center; 
+      padding: 40px 20px; 
+      color: var(--text-dark);
     }
     .header h1 {
       font-size: var(--font-size-h1); font-weight: 700; line-height: 1.1;
@@ -52,7 +63,7 @@
       color: var(--text-subtle); max-width: 600px;
     }
     
-    /* --- 7. 照片轮播容器 (无修改) --- */
+    /* --- 7. 照片轮播容器 --- */
     .photo-container {
       width: clamp(300px, 90vw, 650px);
       aspect-ratio: 4 / 3;
@@ -73,8 +84,7 @@
     }
     .photo-container .slide.active { opacity: 1; }
 
-
-    /* --- 8-10. 内容/CTA/页脚等样式 (无修改) --- */
+    /* --- 8. 内容区域 --- */
     .content-grid {
       display: grid; grid-template-columns: 1fr; gap: 40px;
       width: 100%; max-width: 900px; padding: 100px 20px 60px;
@@ -108,19 +118,32 @@
       line-height: 1.8; margin-top: 0.8em; max-width: 500px;
       margin-left: auto; margin-right: auto;
     }
-    .cta-container { padding: 20px; text-align: center; width: 100%; }
-    .cta-button {
-      display: inline-block; background-color: var(--brand-orange);
-      color: var(--white); text-decoration: none; padding: 16px 32px;
-      border-radius: 50px; font-size: var(--font-size-body);
-      font-weight: 700; box-shadow: 0 4px 15px rgba(211, 84, 0, 0.3);
-      transition: all 0.3s ease;
+
+    /* --- 9. 微信二维码区域 --- */
+    .qr-code-container {
+      padding: 40px 20px;
+      text-align: center;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
     }
-    .cta-button:hover, .cta-button:focus {
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 8px 25px rgba(211, 84, 0, 0.4);
-      background-color: #E67E22;
+    .qr-code-image {
+      width: clamp(150px, 40vw, 200px);
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      border: 4px solid var(--white);
     }
+    .qr-code-prompt {
+      color: var(--text-subtle);
+      font-size: var(--font-size-body);
+      font-weight: 500;
+      margin-top: 10px;
+    }
+
+    /* --- 10. 页脚 --- */
     .footer {
       padding: 40px 20px; text-align: center; font-size: 0.9em;
       color: var(--text-subtle); opacity: 0.7;
@@ -150,9 +173,8 @@
       <img src="photo9.JPG" alt="疗愈工作室环境" class="slide">
     </div>
 
-    <!-- ★★★ 核心修改：调整了下面两个 div 的顺序 ★★★ -->
     <main class="content-grid">
-      <!-- 卡片1: 核心优势 (现在是第一个) -->
+      <!-- 卡片1: 核心优势 -->
       <div class="content-card reveal">
         <h3 class="card-title">核心优势</h3>
         <div class="advantage-item">
@@ -162,11 +184,17 @@
         </div>
         <div class="advantage-item">
           <span class="sub-keyword">精准定制方案</span>
-          <p class="description">融合KHYF认证整体瑜伽理疗\n意大利FM筋膜手法与整合身心平衡疗愈\n提供高度个性化的解决方案</p>
+          <!-- ★★★ 修改后的文字排版 ★★★ -->
+          <p class="description">
+            融合KHYF认证整体瑜伽理疗<br>
+            意大利FM筋膜手法<br>
+            整合身心平衡疗愈<br>
+            提供高度个性化的解决方案
+          </p>
         </div>
       </div>
 
-      <!-- 卡片2: 专项方案 (现在是第二个) -->
+      <!-- 卡片2: 专项方案 -->
       <div class="content-card reveal">
         <h3 class="card-title">专项定制方案</h3>
         <div class="service-item">神经调节情绪平衡<span class="icon">🌿</span></div>
@@ -176,12 +204,13 @@
       </div>
     </main>
 
-    <div class="cta-container reveal">
-      <a href="#" class="cta-button">预约体验疗愈课程</a>
+    <div class="qr-code-container reveal">
+      <img src="wechat-qr.png" alt="微信二维码" class="qr-code-image" onerror="this.onerror=null;this.src='https://placehold.co/200x200/FFFBF8/D35400?text=QR+Code';">
+      <p class="qr-code-prompt">扫码添加微信，预约疗愈课程</p>
     </div>
 
     <footer class="footer reveal">
-      © 2025 卓玲疗愈工作室. All rights reserved.
+      © 2025 All rights reserved.
     </footer>
 
   </div>
